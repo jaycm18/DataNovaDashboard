@@ -1,0 +1,72 @@
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <button class="btn btn-outline-primary w-100 my-2" onclick="loadReport('Sales')">📦 Myyntiraportti</button>
+            <button class="btn btn-outline-success w-100 my-2" onclick="loadReport('Map')">🗺️ Toimipisteet Kartalla</button>
+            <button class="btn btn-outline-info w-100 my-2" onclick="loadReport('Projects')">💻 Projektit</button>
+            <button class="btn btn-outline-warning w-100 my-2" onclick="loadReport('Finance')">💸 Talous</button>
+            <!-- Home linkki lisätty -->
+            <a href="@Url.Action("Index", "Home")" class="btn btn-outline-dark w-100 my-2">🏠 Koti</a>
+        </div>
+
+        <!-- Content area -->
+        <div class="col-md-9" id="report-container">
+            <h3 class="mb-4 text-primary">Tervetuloa DataNova Oy:n raporttisivustolle!</h3>
+            <p>DataNova tarjoaa älykkäitä data- ja IT-ratkaisuja liiketoimintasi tueksi. Autamme yrityksiä hyödyntämään tietoa tehokkaasti päätöksenteossa, kasvussa ja digitalisaatiossa.</p>
+
+            <!-- Palvelukortit -->
+            <div class="row mt-4">
+                <div class="col-md-6 mb-3">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">📊 Business Intelligence</h5>
+                            <p class="card-text">Toteutamme selkeitä ja tehokkaita Power BI -ratkaisuja, joiden avulla liiketoimintatieto muuttuu toiminnaksi.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">☁️ Pilvipalvelut (Azure)</h5>
+                            <p class="card-text">Modernit ja skaalautuvat pilviympäristöt datan varastointiin, analysointiin ja sovellusten käyttöön.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">💻 Ohjelmistokehitys</h5>
+                            <p class="card-text">Räätälöityjä sovelluksia liiketoiminnan tarpeisiin – tehokkaasti ja käyttäjälähtöisesti.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">📈 Datan analysointi</h5>
+                            <p class="card-text">Kehittynyttä analytiikkaa, mallinnusta ja raportointia datasta kilpailuedun saavuttamiseksi.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function loadReport(reportName) {
+            $("#report-container").load("/Home/LoadReport?report=" + reportName, function(response, status, xhr) {
+                if (status == "error") {
+                    $("#report-container").html("<p class='text-danger'>Virhe ladattaessa raporttia: " + xhr.status + " " + xhr.statusText + "</p>");
+                }
+            });
+        }
+    </script>
+}
